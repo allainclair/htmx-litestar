@@ -1,2 +1,2 @@
 # htmx-startlite
-htmx-startlite
+htmx-startlite examples

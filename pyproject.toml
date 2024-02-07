@@ -1,0 +1,100 @@
+[project]
+name = "htmx-startlite"
+version = "0.1.0"
+description = "Default template for PDM package"
+authors = [
+    {name = "Allainclair Flausino dos Santos", email = "allainclair@gmail.com"},
+]
+dependencies = [
+]
+requires-python = "==3.12.*"
+readme = "README.md"
+license = {text = "MIT"}
+
+
+[tool.pdm]
+distribution = false
+
+[tool.pdm.dev-dependencies]
+test = [
+	"pytest>=7.4.4",
+	"pytest-asyncio>=0.23.3",  # Remove it if you do not need asyncio.
+	"coverage>=7.4.1",
+]
+lint = [
+	"mypy>=1.8.0",
+	"ruff>=0.1.14",
+]
+debug = [
+	"pytest-watcher>=0.3.5",
+	"rich>=13.7.0",
+]
+
+[tool.pdm.scripts]
+cov-run = {cmd = ["coverage", "run", "--branch", "--source=src", "-m", "pytest", "-vvss", "tests"]}
+cov-term = {cmd = ["coverage", "report", "-m", "--fail-under=90"]}
+cov-html = {cmd = ["coverage", "html", "--fail-under=90"]}
+cov = {composite = ["cov-run", "cov-term"]}  # run coverage and report with terminal output
+cov-run-html = {composite = ["cov", "cov-html"]}  # run coverage and report with html output
+
+mypy-strict = {cmd = ["mypy", "--strict", "."]}
+ruff-dot = {cmd = ["ruff", "."]}
+ruff-format = {cmd = ["ruff", "format"]}
+ruff-fix = {cmd = ["ruff", ".", "--fix"]}
+
+ruff-all = {composite = ["ruff-dot", "ruff-format"]}
+lint = {composite = ["ruff-all", "mypy-strict"]}
+
+lint-test = {composite = ["lint", "cov"]}
+
+[tool.pytest.ini_options]  # https://docs.pytest.org/en/latest/reference/customize.html
+asyncio_mode = "auto"  # Remove it if you do not need asyncio.
+
+[tool.ruff]
+line-length = 80
+
+# Suggestions to add to select: EM
+select = [
+	"E",
+	"F",
+	"I",
+	"W",
+	"N",
+	"COM",
+	"C4",
+	"PIE",
+	"T20",
+	"Q",
+	"RET",
+	"SIM",
+	"ARG",
+	"PGH",
+	"RUF",
+]
+ignore = [
+	# https://docs.astral.sh/ruff/formatter/#format-suppression
+	"E111",  # https://docs.astral.sh/ruff/rules/indentation-with-invalid-multiple/
+	"E114",  # https://docs.astral.sh/ruff/rules/indentation-with-invalid-multiple-comment/
+	# "E117",  # https://docs.astral.sh/ruff/rules/over-indented/
+	# "D206",  # https://docs.astral.sh/ruff/rules/indent-with-spaces/
+	# "D300",  # https://docs.astral.sh/ruff/rules/triple-single-quotes/
+	# "ISC001", # https://docs.astral.sh/ruff/rules/single-line-implicit-string-concatenation/
+	# "ISC002",  # https://docs.astral.sh/ruff/rules/multi-line-implicit-string-concatenation/
+	# "Q001",  # https://docs.astral.sh/ruff/rules/bad-quotes-multiline-string/
+	# "Q002",  # https://docs.astral.sh/ruff/rules/bad-quotes-docstring/
+	# "Q003",  # https://docs.astral.sh/ruff/rules/avoidable-escaped-quote/
+	"W191",  # https://docs.astral.sh/ruff/rules/tab-indentation/
+	"RUF009",  # https://docs.astral.sh/ruff/rules/function-call-in-dataclass-default-argument/
+]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "tab"
+line-ending = "lf"  # Use `\n` line endings for all files
+
+[tool.ruff.lint.isort]
+case-sensitive = true
+split-on-trailing-comma = false
+
+[tool.ruff.mccabe]
+max-complexity = 10
