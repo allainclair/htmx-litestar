@@ -6,6 +6,9 @@ authors = [
     {name = "Allainclair Flausino dos Santos", email = "allainclair@gmail.com"},
 ]
 dependencies = [
+    "litestar[jinja]>=2.6.0",
+    "uvicorn>=0.27.0.post1",
+    "pydantic>=2.6.1",
 ]
 requires-python = "==3.12.*"
 readme = "README.md"
@@ -46,6 +49,8 @@ ruff-all = {composite = ["ruff-dot", "ruff-format"]}
 lint = {composite = ["ruff-all", "mypy-strict"]}
 
 lint-test = {composite = ["lint", "cov"]}
+
+dev = {cmd = ["uvicorn", "src.main:app", "--reload", "--log-level", "debug"]}
 
 [tool.pytest.ini_options]  # https://docs.pytest.org/en/latest/reference/customize.html
 asyncio_mode = "auto"  # Remove it if you do not need asyncio.
