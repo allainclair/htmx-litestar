@@ -1,0 +1,19 @@
+{% import "components/input.html.jinja" as input with context %}
+{% import "components/loader.html.jinja" as loader with context %}
+
+<form id="form" hx-post="/users/messages" hx-target="#user-message" hx-trigger="submit" hx-swap="outerHTML" hx-disabled-elt="#name, #email, #message, #button-text" hx-indicator="#loader">
+	{{ input.create( name="name", label_value="First Name", type="text", id="name", required=True ) }}
+	{{ input.create( name="email", label_value="Email", type="email", id="email", required=True ) }}
+
+	<div class="mb-4">
+		<label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+		<textarea id="message" name="message" rows="4" cols="50" required
+			class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+		</textarea>
+	</div>
+
+	<input id="button-text" type="submit" value="Send Message"
+		class="inline-block bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
+	>
+	{{ loader.create( loader_id="loader" ) }}
+</form>

@@ -2,45 +2,15 @@
 {% block title %}Index{% endblock %}
 
 {% block content %}
-{% import 'loader.html.jinja' as loader with context %}
+{% import "components/loader.html.jinja" as loader with context %}
+{% import "components/index_form.html.jinja" as form with context %}
+{% import "components/message.html.jinja" as message with context %}
 
 <div class="max-w-md mx-auto mt-10">
 	<h1 class="text-2xl font-bold mb-4">User Message</h1>
+	{{ form }}
 
-	<form id="form" hx-post="/users/messages" hx-target="#user-message" hx-trigger="submit" hx-swap="outerHTML" hx-disabled-elt="#name, #email, #message, #button-text" hx-indicator="#loader">
-		<div class="mb-4">
-			<label for="name" class="block text-sm font-medium text-gray-700">First Name</label>
-			<input type="text" id="name" name="name" required
-				class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-		</div>
-
-		<div class="mb-4">
-			<label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-			<input type="email" id="email" name="email" required
-				class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-		</div>
-
-		<div class="mb-4">
-			<label for="message" class="block text-sm font-medium text-gray-700">Message</label>
-			<textarea id="message" name="message" rows="4" cols="50" required
-				class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-			</textarea>
-		</div>
-
-		<input id="button-text" type="submit" value="Send Message"
-			class="inline-block bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
-		>
-		{{ loader.create( loader_id="loader" ) }}
-	</form>
-
-	<div id="user-message" class="max-w-md mx-auto mt-8">
-			<div class="bg-gray-800 rounded-md shadow-md p-4 text-white">
-				<div class="font-bold text-lg mb-2">User's Message</div>
-				<div class="mb-2"><span class="font-semibold">User:</span></div>
-				<div class="mb-2"><span class="font-semibold">Email:</span></div>
-				<div><span class="font-semibold">Message:</span></div>
-			</div>
-	</div>
+	{{ message }}
 
 	<input
 		hx-post="/users/messages"
@@ -54,6 +24,7 @@
 		value="Reset Message"
 		class="inline-block bg-indigo-500 text-white px-4 py-2 mt-4 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600"
 	>
+
 	{{ loader.create( loader_id="loader-2" ) }}
 
 </div>
